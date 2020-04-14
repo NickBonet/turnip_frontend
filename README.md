@@ -2,7 +2,7 @@
 
 Frontend for the turnip_api project.
 
-Using latest Beta version of FLutter with web support enabled.
+Using latest Beta version of Flutter with web support enabled.
 
 ## Getting Started
 

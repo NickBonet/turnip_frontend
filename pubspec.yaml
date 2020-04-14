@@ -17,6 +17,10 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  http: ^0.12.0+4
+  regexed_validator:
+    git:
+      url: git@github.com:NickBonet/regexed_validator.git
   flutter:
     sdk: flutter
 

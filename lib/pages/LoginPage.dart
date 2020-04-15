@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:regexed_validator/regexed_validator.dart';
+import 'package:provider/provider.dart';
 
 import 'package:turnip_frontend/stores/LoginStore.dart';
 import 'package:turnip_frontend/widgets/MainAppBar.dart';
@@ -20,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   final pwdController = TextEditingController();
   final _loginFormKey = GlobalKey<FormState>();
   
-  final LoginStore loginStore = LoginStore();
   final List<ReactionDisposer> _disposers = [];
 
   void dispose() {
@@ -32,13 +32,13 @@ class _LoginPageState extends State<LoginPage> {
     super.didChangeDependencies();
     _disposers.add(
     reaction(
-      (_) => loginStore.loggedIn,
+      (_) => Provider.of<LoginStore>(context, listen: false).loggedIn,
       (_) => Navigator.of(context).pop(),
     ),
   );
   }
 
-  void validateLogin() {
+  void validateLogin(loginStore) {
     final loginForm = _loginFormKey.currentState;
     if (loginForm.validate()) {
       loginStore.loginApiCall(emailController.text, pwdController.text);
@@ -47,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final loginStore = Provider.of<LoginStore>(context, listen: false);
     return Observer(
         builder: (_) => Scaffold(
         appBar: MainAppBar(title: 'Login'),
@@ -100,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text('Login'),
                     color: Colors.white70,
                     onPressed: () {
-                      validateLogin();
+                      validateLogin(loginStore);
                       loginStore.setLoading(true);
                     },
                   ),

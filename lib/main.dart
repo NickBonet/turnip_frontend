@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:turnip_frontend/stores/LoginStore.dart';
 import './pages/HomePage.dart';
 import './pages//LoginPage.dart';
 
-void main() => runApp(TurnipApp());
+void main() => runApp(
+  Provider(
+    create: (context) => LoginStore(),
+    child: TurnipApp()
+  )
+);
 
 class TurnipApp extends StatelessWidget {
   @override

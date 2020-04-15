@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:regexed_validator/regexed_validator.dart';
 import 'package:turnip_frontend/widgets/MainAppBar.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -18,8 +19,18 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final pwdController = TextEditingController();
   final _loginFormKey = GlobalKey<FormState>();
+  bool isLoading = false;
+  bool isValid = false;
 
-  Future<http.Response> fetchLoginToken() async {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> loginApiCall() async {
+    String loginUrl = 'http://192.168.2.61:3000/auth/user_token';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
     Map authPayload = {
       'auth' : {
         'email' : emailController.text,
@@ -28,30 +39,36 @@ class _LoginPageState extends State<LoginPage> {
     };
 
     final response = await http.post(
-      'http://192.168.2.61:3000/auth/user_token',
+      loginUrl,
       headers: {"Content-type": "application/json"},
       body: jsonEncode(authPayload)
     );
 
     if (response.statusCode == 201) {
-      print(json.decode(response.body)['jwt']); 
+      await prefs.setString('jwt', json.decode(response.body)['jwt']);
+      setState(() {
+        isLoading = false;
+        isValid = true;
+      });
+      Navigator.pop(context);
+    }
+    else if (response.statusCode == 404) {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
   void validateLogin() {
     final loginForm = _loginFormKey.currentState;
     if (loginForm.validate()) {
-      print('true');
-      fetchLoginToken();
-    }
-    else {
-      print('false');
+      loginApiCall();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isValid ? Text('get out bro') : Scaffold(
       appBar: MainAppBar(title: 'Login'),
       body: Container(
         decoration: BoxDecoration(
@@ -60,7 +77,8 @@ class _LoginPageState extends State<LoginPage> {
             fit: BoxFit.cover,
           )
         ),
-        child: Center(
+        child: isLoading ? Center(child: CircularProgressIndicator()) : 
+        Center(
           child: Form(
               key: _loginFormKey,
               child: Column(
@@ -109,8 +127,13 @@ class _LoginPageState extends State<LoginPage> {
                 RaisedButton(
                   child: Text('Login'),
                   color: Colors.white70,
-                  onPressed: validateLogin,
-                )
+                  onPressed: () {
+                    validateLogin();
+                    setState(() {
+                      isLoading = true;
+                    });
+                  },
+                ),
               ],
             ),
           ),

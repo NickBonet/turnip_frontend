@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import '../LoginPage.dart';
+import '../pages/LoginPage.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   MainAppBar({Key key, this.title}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key : key);
@@ -14,6 +14,11 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MainAppBar extends State<MainAppBar> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(

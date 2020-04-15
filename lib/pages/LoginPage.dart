@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:regexed_validator/regexed_validator.dart';
+
 import 'package:turnip_frontend/stores/LoginStore.dart';
 import 'package:turnip_frontend/widgets/MainAppBar.dart';
 
@@ -19,6 +21,22 @@ class _LoginPageState extends State<LoginPage> {
   final _loginFormKey = GlobalKey<FormState>();
   
   final LoginStore loginStore = LoginStore();
+  final List<ReactionDisposer> _disposers = [];
+
+  void dispose() {
+    super.dispose();
+    _disposers.forEach((disposer) {disposer();});
+  }
+
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _disposers.add(
+    reaction(
+      (_) => loginStore.loggedIn,
+      (_) => Navigator.of(context).pop(),
+    ),
+  );
+  }
 
   void validateLogin() {
     final loginForm = _loginFormKey.currentState;
@@ -30,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Observer(
-        builder: (_) => loginStore.loggedIn ? Text('get out bro') : Scaffold(
+        builder: (_) => Scaffold(
         appBar: MainAppBar(title: 'Login'),
         body: Container(
           decoration: BoxDecoration(
@@ -86,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                       loginStore.setLoading(true);
                     },
                   ),
-                  loginStore.failedLogin ? Text('The credentials you entered are incorrect.') : Container()
+                  loginStore.failedLogin ? Text('The credentials you entered are incorrect.') : Container() // can't be null...
                 ],
               ),
             ),

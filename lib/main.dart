@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './pages/HomePage.dart';
+import './pages//LoginPage.dart';
 
 void main() => runApp(TurnipApp());
 
@@ -12,6 +13,10 @@ class TurnipApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: HomePage(title: 'Project Turnip'),
+      routes: <String, WidgetBuilder> {
+        '/home' : (BuildContext context) => HomePage(),
+        '/login' : (BuildContext context) => LoginPage(),
+      }
     );
   }
 }

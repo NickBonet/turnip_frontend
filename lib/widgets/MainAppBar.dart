@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import '../pages/LoginPage.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   MainAppBar({Key key, this.title}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key : key);
@@ -35,7 +34,7 @@ class _MainAppBar extends State<MainAppBar> {
             child: Text("Sign Up", style: TextStyle(color: Colors.white))),
           OutlineButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+              Navigator.pushNamed(context, '/login');
             },
             child: Text("Login", style: TextStyle(color: Colors.white))  
             ),

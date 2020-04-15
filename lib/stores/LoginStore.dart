@@ -45,10 +45,10 @@ abstract class _LoginStore with Store {
       setLoading(false);
       loggedIn = true;
       failedLogin = false;
-      //Navigator.pop(context); need to reimpl.
     }
     else if (response.statusCode == 404) {
       setLoading(false);
+      loggedIn = false;
       failedLogin = true;
     }
   }

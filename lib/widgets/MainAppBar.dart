@@ -35,20 +35,21 @@ class _MainAppBar extends State<MainAppBar> {
             ],),
         backgroundColor: Color(0xFF065c1b),
         actions: <Widget>[
-            OutlineButton(
-              onPressed: () {  },
-              child: Text("Sign Up", style: TextStyle(color: Colors.white))),
-            !loginStore.loggedIn ? OutlineButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
-              child: Text("Login", style: TextStyle(color: Colors.white))  
-              )
-            : OutlineButton(
-              onPressed: () {},
-              child: Text('Hello there!', style: TextStyle(color: Colors.white))
-              )
-          ],
+          OutlineButton(
+            onPressed: () {  },
+            child: Text("Sign Up", style: TextStyle(color: Colors.white))
+          ),
+          !loginStore.loggedIn ? OutlineButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/login');
+            },
+            child: Text("Login", style: TextStyle(color: Colors.white))  
+          )
+          : OutlineButton(
+            onPressed: () {},
+            child: Text('Hello there!', style: TextStyle(color: Colors.white))
+            )
+        ],
       )
     );
   }

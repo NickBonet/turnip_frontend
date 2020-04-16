@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                           filled: true,
                           fillColor: Colors.white70,
-                          icon: Icon(Icons.account_circle),
+                          icon: Icon(Icons.email),
                           labelText: 'E-mail Address'
                         ),
                       ),

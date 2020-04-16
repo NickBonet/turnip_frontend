@@ -49,7 +49,22 @@ class _SignupPageState extends State<SignupPage> {
                 key: _signupFormKey,
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[            
+                children: <Widget>[     
+                  FractionallySizedBox(
+                    widthFactor: 0.45,
+                    child: TextFormField(
+                      controller: pwdController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        filled: true,
+                        fillColor: Colors.white70,
+                        icon: Icon(Icons.account_circle),
+                        labelText: 'Username'
+                      ),
+                    ),
+                  ),      
+                  SizedBox(height: 20), 
                   FractionallySizedBox(
                     widthFactor: 0.45,
                     child: TextFormField(
@@ -61,7 +76,7 @@ class _SignupPageState extends State<SignupPage> {
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                           filled: true,
                           fillColor: Colors.white70,
-                          icon: Icon(Icons.account_circle),
+                          icon: Icon(Icons.email),
                           labelText: 'E-mail Address'
                         ),
                       ),
@@ -78,6 +93,21 @@ class _SignupPageState extends State<SignupPage> {
                         fillColor: Colors.white70,
                         icon: Icon(Icons.vpn_key),
                         labelText: 'Password'
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  FractionallySizedBox(
+                    widthFactor: 0.45,
+                    child: TextFormField(
+                      controller: pwdController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        filled: true,
+                        fillColor: Colors.white70,
+                        icon: Icon(Icons.vpn_key),
+                        labelText: 'Confirm password above'
                       ),
                     ),
                   ),

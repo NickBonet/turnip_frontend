@@ -4,53 +4,39 @@ import 'package:mobx/mobx.dart';
 import 'package:regexed_validator/regexed_validator.dart';
 import 'package:provider/provider.dart';
 
-import 'package:turnip_frontend/stores/LoginStore.dart';
 import 'package:turnip_frontend/widgets/MainAppBar.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  SignupPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
-  final pwdController = TextEditingController();
-  final _loginFormKey = GlobalKey<FormState>();
-  
-  final List<ReactionDisposer> _disposers = [];
+class _SignupPageState extends State<SignupPage> {
+  final emailController = TextEditingController(), pwdController = TextEditingController();
+  final usernameController = TextEditingController(), pwdConfirmController = TextEditingController();
+  final _signupFormKey = GlobalKey<FormState>();
 
   void dispose() {
     super.dispose();
-    _disposers.forEach((disposer) {disposer();});
   }
 
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _disposers.add(
-    reaction(
-      (_) => Provider.of<LoginStore>(context, listen: false).loggedIn,
-      (_) => Navigator.of(context).pop(),
-    ),
-  );
   }
 
-  void validateLogin(loginStore) {
-    final loginForm = _loginFormKey.currentState;
-    if (loginForm.validate()) {
-      loginStore.loginApiCall(emailController.text, pwdController.text);
-    }
+  void validateSignUp() {
+
   }
 
   @override
   Widget build(BuildContext context) {
-    final loginStore = Provider.of<LoginStore>(context, listen: false);
     return Observer(
         builder: (_) => Scaffold(
-        appBar: MainAppBar(title: 'Login'),
+        appBar: MainAppBar(title: 'Sign Up'),
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -58,10 +44,9 @@ class _LoginPageState extends State<LoginPage> {
               fit: BoxFit.cover,
             )
           ),
-          child: loginStore.isLoading ? Center(child: CircularProgressIndicator()) : 
-          Center(
+          child: Center(
             child: Form(
-                key: _loginFormKey,
+                key: _signupFormKey,
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[            
@@ -98,14 +83,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 10),
                   RaisedButton(
-                    child: Text('Login'),
+                    child: Text('Sign Up'),
                     color: Colors.white70,
                     onPressed: () {
-                      validateLogin(loginStore);
-                      loginStore.setLoading(true);
                     },
                   ),
-                  loginStore.failedLogin ? Text('The credentials you entered are incorrect.') : Container() // can't be null...
                 ],
               ),
             ),

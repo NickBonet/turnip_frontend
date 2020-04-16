@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:turnip_frontend/pages/SignupPage.dart';
 import 'package:turnip_frontend/stores/LoginStore.dart';
-import './pages/HomePage.dart';
-import './pages//LoginPage.dart';
+import 'package:turnip_frontend/pages/HomePage.dart';
+import 'package:turnip_frontend/pages/LoginPage.dart';
 
 void main() => runApp(
   Provider(
@@ -23,6 +24,7 @@ class TurnipApp extends StatelessWidget {
       routes: <String, WidgetBuilder> {
         '/home' : (BuildContext context) => HomePage(),
         '/login' : (BuildContext context) => LoginPage(),
+        '/signup' : (BuildContext context) => SignupPage(),
       }
     );
   }

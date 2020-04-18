@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 import 'package:regexed_validator/regexed_validator.dart';
-import 'package:provider/provider.dart';
 
+import 'package:turnip_frontend/stores/SignupStore.dart';
 import 'package:turnip_frontend/widgets/MainAppBar.dart';
 
 class SignupPage extends StatefulWidget {
@@ -19,6 +18,7 @@ class _SignupPageState extends State<SignupPage> {
   final emailController = TextEditingController(), pwdController = TextEditingController();
   final usernameController = TextEditingController(), pwdConfirmController = TextEditingController();
   final _signupFormKey = GlobalKey<FormState>();
+  final signupStore = SignupStore();
 
   void dispose() {
     super.dispose();
@@ -29,7 +29,10 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   void validateSignUp() {
-
+    final signupForm = _signupFormKey.currentState;
+    if (signupForm.validate()) {
+      signupStore.postSignup(emailController.text, pwdController.text, usernameController.text, pwdConfirmController.text);
+    }
   }
 
   @override
@@ -44,7 +47,8 @@ class _SignupPageState extends State<SignupPage> {
               fit: BoxFit.cover,
             )
           ),
-          child: Center(
+          child: signupStore.isLoading ? Center(child: CircularProgressIndicator()) : 
+          Center(
             child: Form(
                 key: _signupFormKey,
                 child: Column(
@@ -53,7 +57,7 @@ class _SignupPageState extends State<SignupPage> {
                   FractionallySizedBox(
                     widthFactor: 0.45,
                     child: TextFormField(
-                      controller: pwdController,
+                      controller: usernameController,
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -100,7 +104,7 @@ class _SignupPageState extends State<SignupPage> {
                   FractionallySizedBox(
                     widthFactor: 0.45,
                     child: TextFormField(
-                      controller: pwdController,
+                      controller: pwdConfirmController,
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -116,8 +120,11 @@ class _SignupPageState extends State<SignupPage> {
                     child: Text('Sign Up'),
                     color: Colors.white70,
                     onPressed: () {
+                      validateSignUp();
+                      signupStore.setLoading(true);
                     },
                   ),
+                  signupStore.successfulSignup ? Text('successfulSignup?: true') : Text('PLACEHOLDER')
                 ],
               ),
             ),

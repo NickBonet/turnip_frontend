@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   void validateLogin(loginStore) {
     final loginForm = _loginFormKey.currentState;
     if (loginForm.validate()) {
-      loginStore.loginApiCall(emailController.text, pwdController.text);
+      loginStore.postLogin(emailController.text, pwdController.text);
     }
   }
 

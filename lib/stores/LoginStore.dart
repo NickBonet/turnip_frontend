@@ -23,7 +23,7 @@ abstract class _LoginStore with Store {
   }
 
   @action
-  Future<void> loginApiCall(String email, String password) async {
+  Future<void> postLogin(String email, String password) async {
     String loginUrl = 'http://192.168.2.61:3000/auth/user_token';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     

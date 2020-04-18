@@ -60,12 +60,11 @@ mixin _$LoginStore on _LoginStore, Store {
     }, _$failedLoginAtom, name: '${_$failedLoginAtom.name}_set');
   }
 
-  final _$loginApiCallAsyncAction = AsyncAction('loginApiCall');
+  final _$postLoginAsyncAction = AsyncAction('postLogin');
 
   @override
-  Future<void> loginApiCall(String email, String password) {
-    return _$loginApiCallAsyncAction
-        .run(() => super.loginApiCall(email, password));
+  Future<void> postLogin(String email, String password) {
+    return _$postLoginAsyncAction.run(() => super.postLogin(email, password));
   }
 
   final _$_LoginStoreActionController = ActionController(name: '_LoginStore');

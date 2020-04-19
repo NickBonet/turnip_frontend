@@ -26,6 +26,23 @@ mixin _$SignupStore on _SignupStore, Store {
     }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
   }
 
+  final _$signUpAttemptedAtom = Atom(name: '_SignupStore.signUpAttempted');
+
+  @override
+  bool get signUpAttempted {
+    _$signUpAttemptedAtom.context.enforceReadPolicy(_$signUpAttemptedAtom);
+    _$signUpAttemptedAtom.reportObserved();
+    return super.signUpAttempted;
+  }
+
+  @override
+  set signUpAttempted(bool value) {
+    _$signUpAttemptedAtom.context.conditionallyRunInAction(() {
+      super.signUpAttempted = value;
+      _$signUpAttemptedAtom.reportChanged();
+    }, _$signUpAttemptedAtom, name: '${_$signUpAttemptedAtom.name}_set');
+  }
+
   final _$successfulSignupAtom = Atom(name: '_SignupStore.successfulSignup');
 
   @override
@@ -67,7 +84,7 @@ mixin _$SignupStore on _SignupStore, Store {
   @override
   String toString() {
     final string =
-        'isLoading: ${isLoading.toString()},successfulSignup: ${successfulSignup.toString()}';
+        'isLoading: ${isLoading.toString()},signUpAttempted: ${signUpAttempted.toString()},successfulSignup: ${successfulSignup.toString()}';
     return '{$string}';
   }
 }

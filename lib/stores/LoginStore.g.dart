@@ -26,23 +26,6 @@ mixin _$LoginStore on _LoginStore, Store {
     }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
   }
 
-  final _$loggedInAtom = Atom(name: '_LoginStore.loggedIn');
-
-  @override
-  bool get loggedIn {
-    _$loggedInAtom.context.enforceReadPolicy(_$loggedInAtom);
-    _$loggedInAtom.reportObserved();
-    return super.loggedIn;
-  }
-
-  @override
-  set loggedIn(bool value) {
-    _$loggedInAtom.context.conditionallyRunInAction(() {
-      super.loggedIn = value;
-      _$loggedInAtom.reportChanged();
-    }, _$loggedInAtom, name: '${_$loggedInAtom.name}_set');
-  }
-
   final _$failedLoginAtom = Atom(name: '_LoginStore.failedLogin');
 
   @override
@@ -82,7 +65,7 @@ mixin _$LoginStore on _LoginStore, Store {
   @override
   String toString() {
     final string =
-        'isLoading: ${isLoading.toString()},loggedIn: ${loggedIn.toString()},failedLogin: ${failedLogin.toString()}';
+        'isLoading: ${isLoading.toString()},failedLogin: ${failedLogin.toString()}';
     return '{$string}';
   }
 }

@@ -11,6 +11,9 @@ abstract class _SignupStore with Store {
   bool isLoading = false;
 
   @observable 
+  bool signUpAttempted = false;
+
+  @observable 
   bool successfulSignup = false;
 
   @action
@@ -34,6 +37,8 @@ abstract class _SignupStore with Store {
       headers: {"Content-type": "application/json"},
       body: jsonEncode(authPayload)
     );
+
+    signUpAttempted = true;
 
     if (response.statusCode == 201) {
       setLoading(false);

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:turnip_frontend/pages/SignupPage.dart';
-import 'package:turnip_frontend/stores/LoginStore.dart';
 import 'package:turnip_frontend/pages/HomePage.dart';
 import 'package:turnip_frontend/pages/LoginPage.dart';
+import 'package:turnip_frontend/stores/UserStateStore.dart';
 
 void main() => runApp(
   Provider(
-    create: (context) => LoginStore(),
+    create: (context) => UserStateStore(),
     child: TurnipApp()
   )
 );

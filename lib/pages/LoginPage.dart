@@ -5,12 +5,11 @@ import 'package:regexed_validator/regexed_validator.dart';
 import 'package:provider/provider.dart';
 
 import 'package:turnip_frontend/stores/LoginStore.dart';
+import 'package:turnip_frontend/stores/UserStateStore.dart';
 import 'package:turnip_frontend/widgets/MainAppBar.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  LoginPage({Key key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -32,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
     super.didChangeDependencies();
     _disposers.add(
     reaction(
-      (_) => Provider.of<LoginStore>(context, listen: false).loggedIn,
+      (_) => Provider.of<UserStateStore>(context, listen: false).loggedIn,
       (_) => Navigator.of(context).pop(),
     ),
   );
@@ -41,13 +40,14 @@ class _LoginPageState extends State<LoginPage> {
   void validateLogin(loginStore) {
     final loginForm = _loginFormKey.currentState;
     if (loginForm.validate()) {
+      loginStore.setLoading(true);
       loginStore.postLogin(emailController.text, pwdController.text);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final loginStore = Provider.of<LoginStore>(context, listen: false);
+    final loginStore = LoginStore(Provider.of<UserStateStore>(context, listen: false));
     return Observer(
         builder: (_) => Scaffold(
         appBar: MainAppBar(title: 'Login'),
@@ -86,6 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                       controller: pwdController,
+                      validator: (String value) {
+                        return value.length < 8 ? 'Invalid password entered.' : null;
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -102,7 +105,6 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white70,
                     onPressed: () {
                       validateLogin(loginStore);
-                      loginStore.setLoading(true);
                     },
                   ),
                   loginStore.failedLogin ? Text('The credentials you entered are incorrect.') : Container() // can't be null...

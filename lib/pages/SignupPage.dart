@@ -6,9 +6,7 @@ import 'package:turnip_frontend/stores/SignupStore.dart';
 import 'package:turnip_frontend/widgets/MainAppBar.dart';
 
 class SignupPage extends StatefulWidget {
-  SignupPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  SignupPage({Key key}) : super(key: key);
 
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -31,6 +29,7 @@ class _SignupPageState extends State<SignupPage> {
   void validateSignUp() {
     final signupForm = _signupFormKey.currentState;
     if (signupForm.validate()) {
+      signupStore.setLoading(true);
       signupStore.postSignup(emailController.text, pwdController.text, usernameController.text, pwdConfirmController.text);
     }
   }
@@ -58,7 +57,6 @@ class _SignupPageState extends State<SignupPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                       controller: usernameController,
-                      obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                         filled: true,
@@ -90,6 +88,9 @@ class _SignupPageState extends State<SignupPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                       controller: pwdController,
+                      validator: (String value) {
+                        return validator.password(value) ? null : "Password does not meet minimum requirements.";
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -105,6 +106,9 @@ class _SignupPageState extends State<SignupPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                       controller: pwdConfirmController,
+                      validator: (String value) {
+                        return value == pwdController.text ? null : 'Passwords do not match.';
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -121,10 +125,10 @@ class _SignupPageState extends State<SignupPage> {
                     color: Colors.white70,
                     onPressed: () {
                       validateSignUp();
-                      signupStore.setLoading(true);
                     },
                   ),
-                  signupStore.successfulSignup ? Text('successfulSignup?: true') : Text('PLACEHOLDER')
+                  signupStore.successfulSignup ? Text('Sign up successful!') : Container(),
+                  signupStore.signUpAttempted && !signupStore.successfulSignup ? Text('Sign up failed.') : Container()
                 ],
               ),
             ),

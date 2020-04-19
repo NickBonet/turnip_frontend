@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'package:turnip_frontend/stores/LoginStore.dart';
+import 'package:turnip_frontend/stores/UserStateStore.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   MainAppBar({Key key, this.title}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key : key);
@@ -24,7 +24,7 @@ class _MainAppBar extends State<MainAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    final loginStore = Provider.of<LoginStore>(context, listen: false);
+    final userStateStore = Provider.of<UserStateStore>(context, listen: false);
     return Observer(
         builder: (_) => AppBar(
         title: Row(
@@ -37,13 +37,13 @@ class _MainAppBar extends State<MainAppBar> {
         actions: <Widget>[
           OutlineButton(
             onPressed: () {  
-              Navigator.pushNamed(context, '/signup');
+              Navigator.popAndPushNamed(context, '/signup');
             },
             child: Text("Sign Up", style: TextStyle(color: Colors.white))
           ),
-          !loginStore.loggedIn ? OutlineButton(
+          !userStateStore.loggedIn ? OutlineButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/login');
+              Navigator.popAndPushNamed(context, '/login');
             },
             child: Text("Login", style: TextStyle(color: Colors.white))  
           )

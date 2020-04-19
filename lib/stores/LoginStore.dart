@@ -3,16 +3,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:turnip_frontend/stores/UserStateStore.dart';
+
 part 'LoginStore.g.dart';
 
-class LoginStore = _LoginStore with _$LoginStore;
+class LoginStore extends _LoginStore with _$LoginStore {
+  LoginStore(UserStateStore userStateStore) : super(userStateStore);
+}
 
 abstract class _LoginStore with Store {
-  @observable
-  bool isLoading = false;
+  final UserStateStore _userStateStore;
+  _LoginStore(this._userStateStore);
 
   @observable
-  bool loggedIn = false;
+  bool isLoading = false;
 
   @observable 
   bool failedLogin = false;
@@ -43,12 +47,12 @@ abstract class _LoginStore with Store {
     if (response.statusCode == 201) {
       await prefs.setString('jwt', json.decode(response.body)['jwt']);
       setLoading(false);
-      loggedIn = true;
+      _userStateStore.setLoggedIn(true);
       failedLogin = false;
     }
     else if (response.statusCode == 404) {
       setLoading(false);
-      loggedIn = false;
+      _userStateStore.setLoggedIn(false);
       failedLogin = true;
     }
   }

@@ -48,5 +48,8 @@ abstract class _SignupStore with Store {
       setLoading(false);
       successfulSignup = false;
     }
+    else if (response.statusCode == 400) {
+      // TODO
+    }
   }
 }

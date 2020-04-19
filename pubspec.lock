@@ -392,7 +392,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ca49c906e40a48478f97eb8ab9f9d05e9e168aa2
+      resolved-ref: "2c113b975250550acae3b71fc09193c607f25e3d"
       url: "git@github.com:NickBonet/regexed_validator.git"
     source: git
     version: "1.0.2"

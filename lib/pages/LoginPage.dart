@@ -69,8 +69,9 @@ class _LoginPageState extends State<LoginPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                         controller: emailController,
+                        autovalidate: true,
                         validator: (String value) {
-                          return validator.email(value) ? null : 'Invalid e-mail entered.';
+                          return validator.email(value) ? null : 'Valid e-mail required.';
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -86,8 +87,9 @@ class _LoginPageState extends State<LoginPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                       controller: pwdController,
+                      autovalidate: true,
                       validator: (String value) {
-                        return value.length < 8 ? 'Invalid password entered.' : null;
+                        return value.length < 8 ? 'Password is required.' : null;
                       },
                       obscureText: true,
                       decoration: InputDecoration(

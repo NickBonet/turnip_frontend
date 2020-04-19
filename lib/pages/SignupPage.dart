@@ -77,7 +77,7 @@ class _SignupPageState extends State<SignupPage> {
                         controller: emailController,
                         autovalidate: true,
                         validator: (String value) {
-                          return validator.email(value) ? null : 'Valid email required.';
+                          return validator.email(value) ? null : 'Valid e-mail required.';
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),

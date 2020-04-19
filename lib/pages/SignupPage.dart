@@ -57,6 +57,10 @@ class _SignupPageState extends State<SignupPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                       controller: usernameController,
+                      autovalidate: true,
+                      validator: (String value) {
+                        return validator.username(value) ? null : 'Username must match requirements.';
+                      },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                         filled: true,
@@ -71,8 +75,9 @@ class _SignupPageState extends State<SignupPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                         controller: emailController,
+                        autovalidate: true,
                         validator: (String value) {
-                          return validator.email(value) ? null : 'Invalid e-mail entered.';
+                          return validator.email(value) ? null : 'Valid email required.';
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -88,8 +93,9 @@ class _SignupPageState extends State<SignupPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                       controller: pwdController,
+                      autovalidate: true,
                       validator: (String value) {
-                        return validator.password(value) ? null : "Password does not meet minimum requirements.";
+                        return validator.password(value) ? null : "Password must meet minimum requirements.";
                       },
                       obscureText: true,
                       decoration: InputDecoration(
@@ -106,8 +112,9 @@ class _SignupPageState extends State<SignupPage> {
                     widthFactor: 0.45,
                     child: TextFormField(
                       controller: pwdConfirmController,
+                      autovalidate: true,
                       validator: (String value) {
-                        return value == pwdController.text ? null : 'Passwords do not match.';
+                        return (value == pwdController.text) ? null : 'Passwords must match.';
                       },
                       obscureText: true,
                       decoration: InputDecoration(

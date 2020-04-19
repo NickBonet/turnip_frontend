@@ -35,12 +35,12 @@ class _MainAppBar extends State<MainAppBar> {
             ],),
         backgroundColor: Color(0xFF065c1b),
         actions: <Widget>[
-          OutlineButton(
+          !userStateStore.loggedIn ? OutlineButton(
             onPressed: () {  
               Navigator.popAndPushNamed(context, '/signup');
             },
             child: Text("Sign Up", style: TextStyle(color: Colors.white))
-          ),
+          ) : Container(),
           !userStateStore.loggedIn ? OutlineButton(
             onPressed: () {
               Navigator.popAndPushNamed(context, '/login');

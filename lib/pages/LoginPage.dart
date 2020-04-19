@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     _disposers.add(
     reaction(
       (_) => Provider.of<UserStateStore>(context, listen: false).loggedIn,
-      (_) => Navigator.of(context).pop(),
+      (_) => Navigator.of(context).popAndPushNamed('/home'),
     ),
   );
   }

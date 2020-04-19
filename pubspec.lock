@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.39.6"
+    version: "0.39.7"
   archive:
     dependency: transitive
     description:
@@ -392,7 +392,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "38c915dbfdea8dc78017f904b6ce4fb68d4889b7"
+      resolved-ref: ca49c906e40a48478f97eb8ab9f9d05e9e168aa2
       url: "git@github.com:NickBonet/regexed_validator.git"
     source: git
     version: "1.0.2"

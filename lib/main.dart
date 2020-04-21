@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:turnip_frontend/TurnipRouter.dart';
-import 'package:turnip_frontend/pages/SignupPage.dart';
-import 'package:turnip_frontend/pages/HomePage.dart';
-import 'package:turnip_frontend/pages/LoginPage.dart';
 import 'package:turnip_frontend/stores/UserStateStore.dart';
 
-void main() {
+Future main() async {
   TurnipRouter.setupRouter();
+  await DotEnv().load('.env');
   runApp(
     Provider(
       create: (context) => UserStateStore(),

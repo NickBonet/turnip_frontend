@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:turnip_frontend/stores/UserStateStore.dart';
 
@@ -28,7 +29,7 @@ abstract class _LoginStore with Store {
 
   @action
   Future<void> postLogin(String email, String password) async {
-    String loginUrl = 'http://192.168.2.61:3000/auth/user_token';
+    String loginUrl = '${DotEnv().env['API_URL']}/auth/user_token';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
     Map authPayload = {

@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:turnip_frontend/models/IslandListing.dart';
 
@@ -23,7 +24,7 @@ abstract class _HomeStore with Store {
   @action
   Future<void> getIslands() async {
     setLoading(true);
-    String islandUrl = "http://192.168.2.61:3000/api/islands/all";
+    String islandUrl = "${DotEnv().env['API_URL']}/api/islands/all";
 
     final response = await http.get(
       islandUrl,

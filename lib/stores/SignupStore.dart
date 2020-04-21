@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 part 'SignupStore.g.dart';
 
@@ -23,7 +24,7 @@ abstract class _SignupStore with Store {
 
   @action
   Future<void> postSignup(String email, String password, String username, String passwordConfirm) async {
-    String signupUrl = 'http://192.168.2.61:3000/auth/users/';
+    String signupUrl = '${DotEnv().env['API_URL']}/auth/users/';
     
     Map signupPayload = {
       'email' : email,

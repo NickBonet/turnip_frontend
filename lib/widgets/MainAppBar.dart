@@ -37,13 +37,13 @@ class _MainAppBar extends State<MainAppBar> {
         actions: <Widget>[
           !userStateStore.loggedIn ? OutlineButton(
             onPressed: () {  
-              Navigator.popAndPushNamed(context, '/signup');
+              Navigator.pushReplacementNamed(context, '/signup');
             },
             child: Text("Sign Up", style: TextStyle(color: Colors.white))
           ) : Container(),
           !userStateStore.loggedIn ? OutlineButton(
             onPressed: () {
-              Navigator.popAndPushNamed(context, '/login');
+              Navigator.pushReplacementNamed(context, '/login');
             },
             child: Text("Login", style: TextStyle(color: Colors.white))  
           )

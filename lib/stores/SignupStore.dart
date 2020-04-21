@@ -25,7 +25,7 @@ abstract class _SignupStore with Store {
   Future<void> postSignup(String email, String password, String username, String passwordConfirm) async {
     String signupUrl = 'http://192.168.2.61:3000/auth/users/';
     
-    Map authPayload = {
+    Map signupPayload = {
       'email' : email,
       'username': username,
       'password' : password,
@@ -35,7 +35,7 @@ abstract class _SignupStore with Store {
     final response = await http.post(
       signupUrl,
       headers: {"Content-type": "application/json"},
-      body: jsonEncode(authPayload)
+      body: jsonEncode(signupPayload)
     );
 
     signUpAttempted = true;
